@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>ایڈمن پینل</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f6f4;--card:#fff;--ink:#14231f;--mute:#5d6f69;--line:#dce5e1;--acc:#0f7a5c;--accink:#fff;--danger:#b3261e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1815;--card:#16241f;--ink:#e8f1ee;--mute:#93a8a1;--line:#263a33;--acc:#3ecf9f;--accink:#06231a;--danger:#ff8a80}}
+:root[data-theme="dark"]{--bg:#0e1815;--card:#16241f;--ink:#e8f1ee;--mute:#93a8a1;--line:#263a33;--acc:#3ecf9f;--accink:#06231a;--danger:#ff8a80}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Naskh Arabic',system-ui,sans-serif;font-size:16px;line-height:1.7}
+.wrap{max-width:640px;margin:0 auto;padding:16px}
+h1{font-size:24px;margin:6px 0 10px}h2{margin:0 0 8px;font-size:20px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+button,.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:8px 12px;font:500 14px 'Noto Naskh Arabic',sans-serif;cursor:pointer}
+button.p{background:var(--acc);color:var(--accink);border-color:var(--acc);font-weight:600}
+button.d{color:var(--danger)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.u{direction:ltr;text-align:left}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.warn{background:#f6c343;color:#3b2c00;border-radius:10px;padding:8px 12px;margin-bottom:10px;font-size:14px}
+.help{color:var(--mute);font-size:13.5px}
+.row{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:8px}
+.row.off{opacity:.6}
+.ord{display:flex;flex-direction:column;gap:2px}.ord button{padding:0 8px;font-size:12px;line-height:1.4}
+.logo{width:44px;height:44px;border-radius:10px;flex:none;object-fit:cover;background:var(--acc);color:var(--accink);display:flex;align-items:center;justify-content:center;font-weight:700}
+.nm{flex:1;min-width:0}.nm b{display:block;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.nm span{font-size:12px;color:var(--mute)}
+.row button{padding:6px 9px;font-size:13px}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:5}
+.sheet.on{display:flex}
+.panel{background:var(--card);width:100%;max-width:640px;border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));max-height:94%;overflow:auto}
+.pick{display:flex;align-items:center;gap:12px}
+.two{display:flex;gap:10px}.two>div{flex:1}
+.acts{display:flex;gap:10px;margin-top:16px}.acts button{flex:1;padding:12px;font-size:16px}
+.toast{position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;display:none;z-index:20}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div id="login" class="box" hidden>
+  <h2 id="lt">ایڈمن لاگ ان</h2>
+  <p class="help" id="lh"></p>
+  <label for="pw">پاس ورڈ</label><input type="password" id="pw" class="u" autocomplete="current-password">
+  <div class="acts"><button class="p" id="lgo">داخل ہوں</button></div>
+</div>
+
+<div id="dash" hidden>
+  <h1>ریفر ایڈمن پینل</h1>
+  <div class="warn" id="dirty" hidden>تبدیلیاں محفوظ ہیں مگر ابھی شائع نہیں ہوئیں۔ "ایکسپورٹ" دبا کر links.json ہوسٹنگ پر اپلوڈ کریں۔</div>
+  <div class="tools">
+    <button class="p" id="add">+ نیا ریفر</button>
+    <button id="prev">پیش نظارہ</button>
+    <button id="exp">ایکسپورٹ (پبلش فائل)</button>
+    <button id="imp">امپورٹ</button>
+    <button id="cpw">پاس ورڈ بدلیں</button>
+    <button id="out">لاگ آؤٹ</button>
+  </div>
+  <input type="file" id="impf" accept=".json,application/json" hidden>
+  <div class="box"><input type="search" id="q" placeholder="نام یا کیٹیگری سے تلاش کریں"><p class="help" id="cnt"></p></div>
+  <div id="list"></div>
+</div>
+</div>
+
+<div class="sheet" id="sheet"><div class="panel">
+  <h2 id="ft">نیا ریفر</h2>
+  <label for="name">ریفر کا نام</label><input id="name" type="text">
+  <label for="url">ریفر لنک</label><input id="url" type="url" class="u" placeholder="https://...">
+  <label>آئیکن / لوگو</label>
+  <div class="pick"><div class="logo" id="lp">?</div><label class="btn" style="margin:0">تصویر منتخب کریں<input type="file" id="file" accept="image/*" hidden></label><button id="lclear">ہٹائیں</button></div>
+  <label for="desc">تفصیل</label><textarea id="desc" rows="2"></textarea>
+  <div class="two"><div><label for="btn">بٹن کا متن</label><input id="btn" type="text" placeholder="کھولیں"></div>
+  <div><label for="cat">کیٹیگری</label><input id="cat" type="text" list="cats"><datalist id="cats"></datalist></div></div>
+  <div class="two"><div><label for="act">حالت</label><select id="act"><option value="1">فعال</option><option value="0">غیر فعال</option></select></div>
+  <div><label for="ord">ترتیب نمبر</label><input id="ord" type="number" min="1" class="u"></div></div>
+  <div class="acts"><button id="cancel">منسوخ</button><button class="p" id="save">محفوظ کریں</button></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var $=function(i){return document.getElementById(i)},DK='adminDraft',PK='adminPwHash',items=[],editId=null,logo='';
+function toast(m){var t=$('toast');t.textContent=m;t.style.display='block';setTimeout(function(){t.style.display='none'},2200)}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){return null}}
+function hash(s){
+  if(window.crypto&&crypto.subtle)return crypto.subtle.digest('SHA-256',new TextEncoder().encode('ref:'+s)).then(function(b){return Array.from(new Uint8Array(b)).map(function(x){return ('0'+x.toString(16)).slice(-2)}).join('')});
+  var h=5381,i;for(i=0;i<s.length;i++)h=((h*33)^s.charCodeAt(i))>>>0;return Promise.resolve('x'+h.toString(16));
+}
+/* login */
+function showLogin(){
+  var has=!!ls(PK);$('lt').textContent=has?'ایڈمن لاگ ان':'ایڈمن پاس ورڈ بنائیں';
+  $('lh').textContent=has?'':'پہلی بار: کم از کم 6 حروف کا پاس ورڈ چنیں اور اسے یاد رکھیں۔';
+  $('login').hidden=false;$('dash').hidden=true;$('pw').value='';
+}
+$('lgo').onclick=function(){
+  var p=$('pw').value,has=ls(PK);
+  if(!has){if(p.length<6){toast('پاس ورڈ کم از کم 6 حروف کا ہو');return}hash(p).then(function(h){ls(PK,h);enter()});return}
+  hash(p).then(function(h){if(h===has)enter();else toast('پاس ورڈ غلط ہے')});
+};
+$('pw').onkeydown=function(e){if(e.key==='Enter')$('lgo').click()};
+function enter(){try{sessionStorage.setItem('ok','1')}catch(e){}$('login').hidden=true;$('dash').hidden=false;loadData()}
+$('out').onclick=function(){try{sessionStorage.removeItem('ok')}catch(e){}showLogin()};
+$('cpw').onclick=function(){
+  var o=prompt('موجودہ پاس ورڈ:');if(o===null)return;
+  hash(o).then(function(h){if(h!==ls(PK)){toast('پاس ورڈ غلط ہے');return}
+    var n=prompt('نیا پاس ورڈ (کم از کم 6 حروف):');if(!n||n.length<6){toast('پاس ورڈ بدلا نہیں');return}
+    hash(n).then(function(nh){ls(PK,nh);toast('پاس ورڈ بدل گیا')})});
+};
+/* data */
+function clean(x,i){return{id:x.id||('r'+Date.now()+i),name:String(x.name||'').trim(),url:String(x.url||'').trim(),logo:x.logo||'',desc:x.desc||'',btn:x.btn||'',cat:String(x.cat||'').trim(),active:x.active!==false,order:Number(x.order)||i+1}}
+function loadData(){
+  var d=ls(DK);
+  if(d){try{items=JSON.parse(d).items.map(clean);done()}catch(e){items=[];done()}return}
+  fetch('links.json?t='+Date.now()).then(function(r){return r.json()}).then(function(j){items=(j.items||[]).map(clean);done()}).catch(function(){items=[];done()});
+  function done(){sortIdx();render()}
+}
+function sortIdx(){items.sort(function(a,b){return a.order-b.order});items.forEach(function(x,i){x.order=i+1})}
+function persist(dirty){ls(DK,JSON.stringify({version:1,items:items}));if(dirty!==false)ls('adminDirty','1');render()}
+function render(){
+  $('dirty').hidden=!ls('adminDirty');
+  var q=$('q').value.trim().toLowerCase(),on=items.filter(function(x){return x.active}).length;
+  $('cnt').textContent='کل '+items.length+' ریفر، فعال '+on;
+  var cs=[];items.forEach(function(x){if(x.cat&&cs.indexOf(x.cat)<0)cs.push(x.cat)});
+  $('cats').innerHTML=cs.map(function(c){return '<option value="'+esc(c)+'">'}).join('');
+  var rows=items.filter(function(x){return !q||(x.name+' '+x.cat).toLowerCase().indexOf(q)>=0});
+  $('list').innerHTML=rows.length?rows.map(function(x){
+    var lg=x.logo?'<img class="logo" alt="" src="'+esc(x.logo)+'">':'<div class="logo">'+esc((x.name||'?').charAt(0).toUpperCase())+'</div>';
+    return '<div class="row'+(x.active?'':' off')+'"><div class="ord"><button data-u="'+x.id+'" aria-label="اوپر">▲</button><button data-w="'+x.id+'" aria-label="نیچے">▼</button></div>'+lg+'<div class="nm"><b>'+esc(x.name)+'</b><span>'+esc(x.cat||'بغیر کیٹیگری')+' · '+x.order+'</span></div><button data-t="'+x.id+'">'+(x.active?'فعال':'غیر فعال')+'</button><button data-e="'+x.id+'">تبدیل</button><button class="d" data-d="'+x.id+'">ہٹائیں</button></div>'}).join(''):'<div class="box help">کوئی ریفر نہیں۔ اوپر "+ نیا ریفر" دبائیں۔</div>';
+}
+function get(id){return items.filter(function(x){return x.id===id})[0]}
+$('q').oninput=render;
+$('list').onclick=function(e){
+  var b=e.target.closest('button');if(!b)return;var d=b.dataset,it,i;
+  if(d.t&&(it=get(d.t))){it.active=!it.active;persist()}
+  else if(d.e&&(it=get(d.e)))openForm(it);
+  else if(d.d&&(it=get(d.d))){if(confirm('"'+it.name+'" ہٹا دیں؟')){items=items.filter(function(x){return x!==it});sortIdx();persist()}}
+  else if((d.u||d.w)&&(it=get(d.u||d.w))){i=items.indexOf(it);var j=d.u?i-1:i+1;if(j>=0&&j<items.length){var t=items[i];items[i]=items[j];items[j]=t;items.forEach(function(x,k){x.order=k+1});persist()}}
+};
+/* form */
+function lprev(){var p=$('lp');if(logo){p.innerHTML='<img class="logo" alt="" src="'+logo+'">';p.style.background='none'}else{p.textContent=($('name').value.trim().charAt(0)||'?').toUpperCase();p.style.background=''}}
+function openForm(it){
+  editId=it?it.id:null;$('ft').textContent=it?'ریفر تبدیل کریں':'نیا ریفر';
+  $('name').value=it?it.name:'';$('url').value=it?it.url:'';$('desc').value=it?it.desc:'';$('btn').value=it?it.btn:'';$('cat').value=it?it.cat:'';
+  $('act').value=it&&!it.active?'0':'1';$('ord').value=it?it.order:items.length+1;logo=it?it.logo:'';lprev();$('sheet').classList.add('on');
+}
+$('add').onclick=function(){openForm(null)};$('cancel').onclick=function(){$('sheet').classList.remove('on')};
+$('name').oninput=function(){if(!logo)lprev()};$('lclear').onclick=function(){logo='';lprev()};
+$('file').onchange=function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var im=new Image();im.onload=function(){var c=document.createElement('canvas'),m=Math.min(im.width,im.height);c.width=c.height=128;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,128,128);logo=c.toDataURL('image/jpeg',.85);lprev()};im.src=r.result};r.readAsDataURL(f)};
+$('save').onclick=function(){
+  var n=$('name').value.trim(),u=$('url').value.trim();
+  if(!n){toast('نام لکھیں');return}
+  if(u&&!/^https?:\/\//i.test(u))u='https://'+u;
+  try{new URL(u)}catch(e){toast('درست لنک ڈالیں');return}
+  var it=editId?get(editId):null;
+  if(!it){it={id:'r'+Date.now()};items.push(it)}
+  it.name=n;it.url=u;it.logo=logo;it.desc=$('desc').value.trim();it.btn=$('btn').value.trim();it.cat=$('cat').value.trim();it.active=$('act').value==='1';
+  var o=Number($('ord').value)||items.length,id=it.id;
+  it.order=o;items.sort(function(a,b){return (a.order-b.order)||(a.id===id?-1:b.id===id?1:0)});items.forEach(function(x,k){x.order=k+1});
+  persist();$('sheet').classList.remove('on');toast('محفوظ ہو گیا');
+};
+/* preview, export, import */
+$('prev').onclick=function(){window.open('index.html?preview=1','_blank')};
+$('exp').onclick=function(){
+  var blob=new Blob([JSON.stringify({version:1,updated:new Date().toISOString(),items:items},null,1)],{type:'application/json'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='links.json';document.body.appendChild(a);a.click();a.remove();
+  ls('adminDirty',null);render();toast('links.json ڈاؤنلوڈ ہو گئی۔ اسے ہوسٹنگ پر پرانی فائل کی جگہ اپلوڈ کریں۔');
+};
+$('imp').onclick=function(){$('impf').click()};
+$('impf').onchange=function(e){
+  var f=e.target.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{
+    var j=JSON.parse(r.result),a=Array.isArray(j)?j:j.items;if(!Array.isArray(a))throw 0;
+    a=a.filter(function(x){return x&&x.name&&x.url}).map(clean);
+    if(!confirm(a.length+' ریفر ملے۔ موجودہ فہرست کی جگہ یہ لگا دیں؟'))return;
+    items=a;sortIdx();persist();toast('امپورٹ ہو گیا')}catch(x){toast('فائل درست نہیں ہے')}};
+  r.readAsText(f);e.target.value='';
+};
+try{if(sessionStorage.getItem('ok')==='1'&&ls(PK))enter();else showLogin()}catch(e){showLogin()}
+</script>
+</body>
+</html>
